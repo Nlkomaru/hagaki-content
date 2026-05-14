@@ -10,4 +10,4 @@ image: ''
 これは hagaki template のサンプル記事です。
 
 `HagakiEditor` で編集して保存すると、GitHub の content リポジトリに
-コミットされ、Cloudflare Workers Assets が次回 deploy 時に配信します。![](pending\:c873b682-1e8e-4605-908f-beca86eeb766)
+コミットされ、Cloudflare Workers Assets が次回 deploy 時に配信します。
