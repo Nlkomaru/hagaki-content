@@ -10,4 +10,4 @@ image: ''
 これは hagaki template のサンプル記事です。
 
 `HagakiEditor` で編集して保存すると、GitHub の content リポジトリに
-コミットされ、Cloudflare Workers Assets が次回 deploy 時に配信します。![](/img/28c4ace3-2b16-4d86-befd-de17028b4fdf.avif "blurhash=UQ9s.etPJCS5-et9NsR%25bSf*a%5DWAtWW*s%3Dn-&w=1920&h=1080")
+コミットされ、Cloudflare Workers Assets が次回 deploy 時に配信します。![](/img/79b05e9b-e14b-4a77-a5df-5e42ac4a252a.avif "blurhash=U7EySK%7El05rBA4Iwr.M_0G9ORhSc9Q%251tLM%7C&w=1920&h=1080")
