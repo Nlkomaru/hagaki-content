@@ -10,29 +10,33 @@ main への push で GitHub Actions が自動デプロイします
 
 ```
 content/
-├── wiki/            # 記事の Markdown (frontmatter 必須)
-├── categories/      # カテゴリ JSON
-├── img/             # 画像
-├── wiki.json        # ← scripts/generate-lists.ts が生成 (git管理外)
-├── categories.json  # ← 同上
-└── img.json         # ← 同上
+├── article/                  # 記事ごとのディレクトリ (uuid 名)
+│   └── <uuid>/
+│       ├── index.md          #   記事本体 (frontmatter 必須: slug, uuid)
+│       └── assets/<file>     #   その記事専用の画像
+├── categories/               # カテゴリ JSON
+├── article.json              # ← scripts/generate-lists.ts が生成 (git管理外)
+└── categories.json           # ← 同上
 ```
+
+旧 `wiki/` + `img/` レイアウトからの移行は `pnpm migrate`
+(`scripts/migrate-to-article.ts`) で行えます。画像欠損があれば
+書き込み前に中断し、再実行しても重複しません (冪等)。
 
 ## 配信 URL
 
 | パス | 内容 |
 |---|---|
-| `/wiki.json` | 記事一覧 (`hagaki.posts.list()` が読む) |
-| `/wiki/<slug>.md` | 個別記事 (`hagaki.posts.getBySlug()` が読む) |
+| `/article.json` | 記事一覧 (`hagaki.posts.list()` が読む。slug→uuid 解決にも使う) |
+| `/article/<uuid>/index.md` | 個別記事 (`hagaki.posts.getBySlug()` / `getByUuid()` が読む) |
+| `/article/<uuid>/assets/<filename>` | その記事の画像本体 |
 | `/categories.json` | カテゴリ一覧 |
-| `/img.json` | 画像ファイル名一覧 |
-| `/img/<filename>` | 画像本体 |
 
 ## ローカル開発
 
 ```sh
 pnpm install
-pnpm generate       # wiki.json などを再生成
+pnpm generate       # article.json などを再生成
 pnpm dev            # http://localhost:8787
 ```
 
