@@ -84,6 +84,7 @@ async function migrate() {
 
     const staged: StagedPost[] = [];
     const errors: string[] = [];
+    const skipped: string[] = [];
 
     for (const file of files) {
         const raw = await fs.readFile(path.join(WIKI_DIR, file), "utf-8");
@@ -92,6 +93,7 @@ async function migrate() {
             (data.slug as string | undefined) ?? path.basename(file, ".md");
         if (done.has(slug)) {
             console.info(`skip ${file}: slug "${slug}" already migrated`);
+            skipped.push(file);
             continue;
         }
         const uuid = (data.uuid as string | undefined) ?? crypto.randomUUID();
@@ -153,7 +155,17 @@ async function migrate() {
         );
     }
 
-    // Phase 3: everything migrated (this run + earlier runs) — drop legacy.
+    // Phase 3: drop legacy only on a clean full migration. If any post was
+    // skipped because its slug already exists under content/article, we
+    // cannot prove that existing article is the *same* post (slug ≠ identity
+    // — uuid is). Keep the legacy tree for manual review instead of risking a
+    // silent delete of a different article's source.
+    if (skipped.length > 0) {
+        console.warn(
+            `kept legacy wiki/, img/ — ${skipped.length} post(s) skipped by slug; review and remove manually: ${skipped.join(", ")}`,
+        );
+        return;
+    }
     await fs.rm(WIKI_DIR, { recursive: true, force: true });
     await fs.rm(IMG_DIR, { recursive: true, force: true });
     await fs.rm(path.join(CONTENT_DIR, "wiki.json"), { force: true });
