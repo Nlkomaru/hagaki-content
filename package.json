@@ -10,11 +10,11 @@
         "deploy": "pnpm run generate && wrangler deploy"
     },
     "devDependencies": {
-        "@types/node": "^25.0.3",
+        "@types/node": "^26.6.5",
         "gray-matter": "^4.0.3",
-        "tsx": "^4.19.4",
-        "typescript": "^5.9.3",
-        "wrangler": "^4.55.0"
+        "tsx": "^4.23.15",
+        "typescript": "^7.0.2",
+        "wrangler": "^4.151.2"
     },
     "packageManager": "pnpm@10.15.0"
 }
