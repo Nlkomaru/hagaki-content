@@ -21,6 +21,8 @@ concurrency:
 
 permissions:
   contents: read
+  # @morinoparty/hagaki を GitHub Packages から取得する
+  packages: read
 
 jobs:
   deploy:
@@ -41,6 +43,12 @@ jobs:
         with:
           node-version-file: .node-version
           cache: pnpm
+
+      # GitHub Packages の npm レジストリは公開パッケージでも認証が要る
+      - name: Authenticate to GitHub Packages
+        run: echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - run: pnpm install --frozen-lockfile
 

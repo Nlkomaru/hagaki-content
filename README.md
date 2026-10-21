@@ -1,6 +1,6 @@
 # hagaki-content
 
-[hagaki](https://github.com/Nlkomaru/hagaki) のサンプル content リポジトリ。
+[hagaki](https://github.com/morinoparty/hagaki) のサンプル content リポジトリ。
 `content/` の記事を Cloudflare Workers (Worker 名 `hagaki-content`) の Static Assets で配信します。
 
 配信 URL: `https://hagaki-content.<subdomain>.workers.dev` (subdomain は未確定)
@@ -22,11 +22,11 @@ cloudflare.config.ts     # Worker 設定 (cf)
 wrangler.config.ts       # ビルド設定 (build.command = hagaki generate, assets ディレクトリ)
 ```
 
-- フォーマットの正は hagaki の [`sample/README.md`](https://github.com/Nlkomaru/hagaki/blob/main/sample/README.md)。
+- フォーマットの正は hagaki の [`sample/README.md`](https://github.com/morinoparty/hagaki/blob/main/sample/README.md)。
 - 生成物は `cf dev` / `cf build` の前に `wrangler.config.ts` の build.command (`hagaki generate`) が作り、git にはコミットしません。単体で作るときは `pnpm run generate`。
   `info.json` の履歴は git log から作るので、浅い clone では欠けます。
 - worker を通るのは `/article/*` だけで、それ以外は Assets から直接返します。
-- hagaki は `github:Nlkomaru/hagaki#dist` (公開済みビルド) に依存しています。
+- hagaki は GitHub Packages の `@morinoparty/hagaki` に依存しています (`.npmrc` で `@morinoparty` スコープを GitHub Packages に向けている。ローカルでは `read:packages` を持つトークンが `~/.npmrc` に必要)。
 
 ## ローカル開発
 
