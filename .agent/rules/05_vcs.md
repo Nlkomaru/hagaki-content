@@ -1,0 +1,43 @@
+# Version Control
+
+- ブランチを切る際は、mainブランチから切り、プルリクエストは必ず mainブランチに対して行うこと
+- ブランチを切ってから、作業を始める前に、mainブランチの最新の状態を取り込み、ブランチを切って作業をすること
+- 別の作業があったとしても、できるだけすべてのファイルをステージングの対象とすること
+- ただし、`.env` や `hagaki generate` の生成物 (`content/article.json` など、`.gitignore` 済みのもの) はコミットしないこと
+
+## 作業完了後の流れ
+
+- 作業が終わったら、ユーザーに確認を求めずに、以下を続けて行うこと
+  1. `pnpm run typecheck` と `pnpm run build` が通ることを確認する
+  2. すべての変更をコミットする
+  3. ブランチを push する
+  4. `gh pr create` で main ブランチに対してプルリクエストを作成する
+- プルリクエストのタイトルはコミットメッセージと同じ形式（emoji + 英語の概要）で書くこと
+- プルリクエストの本文は英語で、変更内容と背景を簡潔に書くこと
+- 作業が途中で止まった場合や、ユーザーが明示的に「push しない」「PR を作らない」と言った場合はこの限りではない
+- main への push で本番に deploy される (`.github/workflows/deploy.yml`) ため、main へ直接 push しないこと
+
+## Repository
+- [hagaki-content](https://github.com/Nlkomaru/hagaki-content)
+- [hagaki](https://github.com/morinoparty/hagaki) (content フォーマットと content worker の本体)
+
+## コミットメッセージ
+- コミットメッセージは英語で書き、以下のような形式で書く。
+
+```
+emoji コミットの概要
+```
+
+例:
+```
+🎨 Add new method to get fish
+```
+
+- hagaki のエディタからの保存は `Update post: <slug>` などの形式でコミットされる。これは自動生成なので、上の形式に合わせて書き換えないこと
+
+## Issueについて
+
+- 新しい機能を追加する場合は、Issueを作成してください。
+- Issueは英語で書き、適切なラベルを追加してください。
+- 現状存在しないラベルについては、勝手に作成しないでください
+- どうしても必要である場合は、ユーザーに相談してください
